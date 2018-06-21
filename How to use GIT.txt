@@ -1,0 +1,73 @@
+HOW TO USE GITHUB:
+
+1. Create a github account with an email.
+
+2. Download GIT at https://git-scm.com/downloads
+
+3. Go to your GitHub profile page. (https://github.com/YourUserName)
+
+4. Click on "Repositories" near the top
+
+5. Click "New" a green colored button. Name it.
+
+6. Run Git Bash
+
+7. Locate Project directory using:
+
+"ls"  = show current directory files
+
+"cd [folder]"  = change directory to [folder]
+
+"cd .."  = change to previous directory
+
+8. To setup the directory, type:
+
+git init
+git remote add origin https://github.com/myusername/reponame.git
+git config --global user.name myusername
+git config --global user.email myemail
+git config --global github.user myusername
+
+9. To push your project to github, type:
+git status
+git add filename   OR     git add --all
+git commit -m "Message"
+git push origin master
+
+10. To pull your project to the current directory, type:
+git pull
+
+11. To clone your project to the current directory, type:
+git init
+git clone https://github.com/YourUsename/YourREPOname.git
+
+
+NOTE1: 
+
+To create a new branch:
+git checkout -b [name_of_your_new_branch]
+
+Change working branch:
+git checkout [name_of_your_new_branch]
+
+Push the branch on github:
+git push origin [name_of_your_new_branch]
+
+To see all branches:
+git branch
+
+NOTE2: 
+
+IF YOU GET THIS ERROR MESSAGE for example:
+
+error: open(".vs/Unity RPG/v15/Server/sqlite3/db.lock"): Permission denied
+error: unable to index file .vs/Unity RPG/v15/Server/sqlite3/db.lock
+fatal: adding files failed
+
+Add a text file in the root containing one line ".vs/". Saved as .gitignore (no file type)
+
+NOTE3:
+
+If Uploading files larger files, use:
+
+https://git-lfs.github.com/
