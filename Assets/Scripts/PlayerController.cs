@@ -12,10 +12,12 @@ public class PlayerController : MonoBehaviour {
     Vector3 resetPosition;
     GameObject player;
     public GameObject checkpointCanvas;
+    public GameObject fiftyPointCanvas;
     public GameObject pointCanvas;
 	public GameObject Explosion;
 	public GameObject Points;
     public GameObject hazardPoints;
+    public GameObject minusLifeCanvas;
     float respawnTime = 0.7f;
     string state = "Moving";
     
@@ -83,6 +85,8 @@ public class PlayerController : MonoBehaviour {
 			temp2.transform.position = other.transform.position;
             Destroy(temp, 1.5f);
 			Destroy (temp2, 1f);
+            GameObject temp3 = (GameObject)Instantiate(fiftyPointCanvas);
+            Destroy(temp3, 0.8f);
         }
 
         if (other.gameObject.tag == "Hazard")
@@ -103,7 +107,9 @@ public class PlayerController : MonoBehaviour {
         cc.LoseLives();
         rb.Sleep();
         this.transform.position = resetPosition;
-        
+        GameObject ouch = (GameObject)Instantiate(minusLifeCanvas);
+        Destroy(ouch, 0.8f);
+
     }
 
     void Movement()
