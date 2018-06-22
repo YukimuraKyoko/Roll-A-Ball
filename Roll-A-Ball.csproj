@@ -87,6 +87,7 @@
     <Compile Include="Assets\Scripts\MoveUpCanvas.cs" />
     <Compile Include="Assets\Scripts\Moveup.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\YellowHair.cs" />
     <Compile Include="Assets\Scripts\canvasController.cs" />
     <Compile Include="Assets\Scripts\collectiblesController.cs" />
   </ItemGroup>

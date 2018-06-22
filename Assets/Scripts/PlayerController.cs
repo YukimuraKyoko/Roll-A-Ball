@@ -18,25 +18,28 @@ public class PlayerController : MonoBehaviour {
 	public GameObject Points;
     public GameObject hazardPoints;
     public GameObject minusLifeCanvas;
+    public GameObject powerUpParticle;
+    GameObject power;
+    bool powerUp = false;
     float respawnTime = 0.7f;
     string state = "Moving";
     
-    
+   
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         rb = this.GetComponent<Rigidbody>();
         //GameObject.Find() searches for a gameobject in the hierarchy with the name passed to it
         cc = GameObject.Find("Canvas").GetComponent<canvasController>();
         resetPosition = transform.position;
-
+        
     }
 
 
 	
 	// Update is called once per frame
 	void Update () {
-        if(state == "Moving")
+        if (state == "Moving")
         {
             Movement();
         }
@@ -57,6 +60,13 @@ public class PlayerController : MonoBehaviour {
             jumpVelocity = jumpHeight;
             state = "Jump";
         }
+
+        if (powerUp)
+        {
+            power.transform.position = transform.position;
+            
+
+        }
     }
 
 
@@ -75,10 +85,36 @@ public class PlayerController : MonoBehaviour {
                 Destroy(temp, 1.5f);
             }
         }
+        if (other.gameObject.tag == "Hazard")
+        {
+            if (powerUp)
+            {
+                other.gameObject.tag = "Collectible";
+            }
+            else
+            {
+                //Delays ReturnToCheckpoint() by 1.5sec
+                Invoke("ReturnToCheckpoint", respawnTime);
+                GameObject temp = (GameObject)Instantiate(Explosion);
+                temp.transform.position = other.transform.position;
+                GameObject temp3 = (GameObject)Instantiate(hazardPoints);
+                temp3.transform.position = other.transform.position;
+                Destroy(temp3, 1f);
+                cc.IncreaseScore(-30);
+            }
+
+        }
 
         if (other.gameObject.tag == "Collectible")
         {
-           cc.IncreaseScore(50);
+            if (powerUp)
+            {
+                cc.IncreaseScore(50 * 2);
+            }
+            else
+            {
+                cc.IncreaseScore(50);
+            }
             other.GetComponent<collectiblesController>().isCollected = true;
             GameObject temp = (GameObject)Instantiate(pointCanvas);
 			GameObject temp2 = (GameObject)Instantiate(Points);
@@ -89,16 +125,14 @@ public class PlayerController : MonoBehaviour {
             Destroy(temp3, 0.8f);
         }
 
-        if (other.gameObject.tag == "Hazard")
+        
+        if (other.gameObject.tag == "PowerUp")
         {
-            //Delays ReturnToCheckpoint() by 1.5sec
-            Invoke("ReturnToCheckpoint", respawnTime);
-			GameObject temp = (GameObject)Instantiate(Explosion);
-			temp.transform.position = other.transform.position;
-            GameObject temp3 = (GameObject)Instantiate(hazardPoints);
-            temp3.transform.position = other.transform.position;
-            Destroy(temp3, 1f);
-            cc.IncreaseScore(-30);
+            other.GetComponent<collectiblesController>().isCollected = true;
+            powerUp = true;
+            power = (GameObject)Instantiate(powerUpParticle);
+            
+
         }
     }
 
